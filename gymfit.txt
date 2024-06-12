@@ -1,0 +1,16 @@
+1. npm i framer-motion react-anchor-link-smooth-scroll@1.0.12 @heroicons/react
+
+2. npm i -D @types/react-anchor-link-smooth-scroll@1.0.2 @types/node
+
+3. touch postcss.config.cjs
+
+4. npm install tailwindcss postcss-cli autoprefixer@9.8.6 -D
+
+5. Create this file in the root postcss.config.js
+
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
