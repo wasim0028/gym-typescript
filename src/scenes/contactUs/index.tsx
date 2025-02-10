@@ -25,6 +25,12 @@ const ContactUs = ({ setSelectedPage }: Props) => {
         }
     };
 
+    window.onbeforeunload = () => {
+        for(const form of document.getElementsByTagName('form')) {
+          form.reset();
+        }
+    }
+
     return (
         <section id="contactus" className="mx-auto w-5/6 pt-24 pb-32">
             <motion.div
@@ -66,14 +72,16 @@ const ContactUs = ({ setSelectedPage }: Props) => {
                         }}
                     >
                         <form
+                            className="handle"
                             target="_blank"
                             onSubmit={onSubmit}
-                            action="https://formspree.io/f/xayzeyww"
+                            action="https://formsubmit.co/14149e189d280033150d209783004e97"
                             method="POST"
                         >
                             <input
                                 className={inputStyles}
                                 type="text"
+                                autoComplete="off"
                                 placeholder="NAME"
                                 {...register("name", {
                                     required: true,
@@ -91,6 +99,7 @@ const ContactUs = ({ setSelectedPage }: Props) => {
                             <input
                                 className={inputStyles}
                                 type="text"
+                                autoComplete="off"
                                 placeholder="EMAIL"
                                 {...register("email", {
                                     required: true,
@@ -108,6 +117,7 @@ const ContactUs = ({ setSelectedPage }: Props) => {
                             <textarea
                                 className={inputStyles}
                                 placeholder="MESSAGE"
+                                autoComplete="off"
                                 rows={4}
                                 cols={50}
                                 {...register("message", {
