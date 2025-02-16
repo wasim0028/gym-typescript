@@ -1,5 +1,5 @@
 # Use the official image as a parent image
-FROM node:20.12.12
+FROM node:hydrogen-alpine3.21
 
 
 # Set the working directiory
