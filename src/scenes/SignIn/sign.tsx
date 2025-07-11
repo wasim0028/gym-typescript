@@ -6,6 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <h1>Only for Amplifier</h1>
 </body>
 </html>
