@@ -1,0 +1,41 @@
+version: 0.2
+# Define environment variables used throughout the build
+env:
+  # Define standard variables
+  variables:
+    # Example: "my-dockerhub-username"
+    DOCKER_HUB_USERNAME: "wasimakram0028"
+    # Example: "my-node-app" (must match the Docker Hub repository name you create)
+    IMAGE_REPO_NAME: "gym-typescript"
+    IMAGE_TAG: "v1"
+  # Reference credentials and URL stored in AWS Systems Manager Parameter Store
+  parameter-store:
+    DOCKER_PASSWORD: "/nodejs/docker/password"
+    DOCKER_USER: "/nodejs/docker/username"
+    # Add the registry URL parameter reference
+    DOCKER_REGISTRY_URL: "/nodejs/docker/registry-url"
+
+phases:
+  pre_build:
+    commands:
+      - echo "Logging in to Docker Hub/Registry..."
+      # Use the credentials and URL from Parameter Store to log in
+      - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD $DOCKER_REGISTRY_URL
+
+  build:
+    commands:
+      - echo "Build started on `date`"
+      - echo "Building the Docker image..."
+      # Construct the full image name using the registry URL
+      - FULL_IMAGE_NAME="${DOCKER_REGISTRY_URL}${DOCKER_HUB_USERNAME}/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+      # Build the Docker image
+      - docker build -t $FULL_IMAGE_NAME .
+
+  post_build:
+    commands:
+      - echo "Build completed on `date`"
+      - echo "Pushing the Docker image to the registry..."
+      - FULL_IMAGE_NAME="${DOCKER_REGISTRY_URL}${DOCKER_HUB_USERNAME}/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+      # Push the image to the remote repository
+      - docker push $FULL_IMAGE_NAME
+      - echo "Image pushed to $FULL_IMAGE_NAME"
