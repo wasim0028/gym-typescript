@@ -19,8 +19,8 @@ docker build -t gym-typescript:v1 .
 
 Open your browser and type `http://localhost:5173`
 Or
-'htttp://ip-of-instance:5173'
-example
+'http://ip-of-instance:5173'
+example :-
 http://18.61.91.72:5173/
 
 
