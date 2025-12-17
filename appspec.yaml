@@ -1,0 +1,15 @@
+version: 0.0
+os: linux
+files:
+  # Move deployment scripts to the instance
+  - source: /scripts
+    destination: /home/ubuntu/scripts
+hooks:
+  ApplicationStop:
+    - location: scripts/stop_container.sh
+      timeout: 300
+      runas: root
+  ApplicationStart:
+    - location: scripts/start_container.sh
+      timeout: 300
+      runas: root
