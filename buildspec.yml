@@ -18,7 +18,7 @@ env:
 phases:
   pre_build:
     commands:
-      - echo "Logging in to Docker Pipeline Hub/Registry..."
+      - echo "Logging in to Docker Hub/Registry..."
       # Use the credentials and URL from Parameter Store to log in
       - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD $DOCKER_REGISTRY_URL
 
