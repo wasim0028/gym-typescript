@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   # Move deployment scripts to the instance
-  - source: /scripts
+  - source: /
     destination: /home/ubuntu/scripts
 hooks:
   ApplicationStop:
