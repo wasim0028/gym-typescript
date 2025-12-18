@@ -1,9 +1,15 @@
 #!/bin/bash
-set -e
-# Use -q to avoid awk; check if any containers exist before trying to rm
-containerid=$(docker ps -q)
-if [ -n "$containerid" ]; then
-  docker rm -f $containerid
-else
-  echo "No containers to stop."
+
+# 1. Define the container name
+CONTAINER_NAME="gym-typescript"
+
+# 2. Check if the container exists
+if [ "$(docker ps -aq -f name=^/${CONTAINER_NAME}$)" ]; then
+    echo "Found existing container: ${CONTAINER_NAME}. Stopping and removing..."
+    
+    # 3. Stop the container if it is running
+    docker stop ${CONTAINER_NAME} || true
+    
+    # 4. Remove the container
+    docker rm ${CONTAINER_NAME} || true
 fi
