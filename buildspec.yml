@@ -36,4 +36,4 @@ artifacts:
     - appspec.yml
     - taskdefinition.json
     - scripts/**/*
-    # The above includes the JSON for ECS or the AppSpec for EC2/Lambda
+    # The above includes the JSON for ECS or the AppSpec for EC2
