@@ -1,15 +1,10 @@
 #!/bin/bash
+set -e
 
-# 1. Define the container name
 CONTAINER_NAME="gym-typescript"
 
-# 2. Check if the container exists
+# Force stop and remove the container if it exists
 if [ "$(docker ps -aq -f name=^/${CONTAINER_NAME}$)" ]; then
-    echo "Found existing container: ${CONTAINER_NAME}. Stopping and removing..."
-    
-    # 3. Stop the container if it is running
-    docker stop ${CONTAINER_NAME} || true
-    
-    # 4. Remove the container
-    docker rm ${CONTAINER_NAME} || true
+    echo "Removing conflicting container: ${CONTAINER_NAME}"
+    docker rm -f ${CONTAINER_NAME}
 fi
