@@ -1,26 +1,41 @@
-# Use the official image as a parent image
-FROM node:hydrogen-alpine3.21
-
-
-# Set the working directiory
+# Stage 1: Build
+FROM node:hydrogen-alpine3.21 AS build
 WORKDIR /app
-
-
-#Copy the file from your host to your current location
-COPY package.json package-lock.json* ./
-
-
-# Run the command inside your image filesystem
+COPY package*.json ./
 RUN npm install
-
-
-# Inform Docker that the container is listening on the specified port at runtime
-EXPOSE 5173
-
-
-# Copy the rest of your app's source code from your host to your image filesystem
 COPY . .
+RUN npm run build
+
+# Stage 2: Production Server
+FROM nginx:stable-alpine
+# Copy the built files from the first stage
+COPY --from=build /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+
+# # Use the official image as a parent image
+# FROM node:hydrogen-alpine3.21
 
 
-# Run the specified command within the container
-CMD [ "npm", "run", "dev" ]
+# # Set the working directiory
+# WORKDIR /app
+
+
+# #Copy the file from your host to your current location
+# COPY package.json package-lock.json* ./
+
+
+# # Run the command inside your image filesystem
+# RUN npm install
+
+
+# # Inform Docker that the container is listening on the specified port at runtime
+# EXPOSE 5173
+
+
+# # Copy the rest of your app's source code from your host to your image filesystem
+# COPY . .
+
+
+# # Run the specified command within the container
+# CMD [ "npm", "run", "dev" ]
